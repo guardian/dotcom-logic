@@ -1,15 +1,19 @@
-import express from "express";
+import express, { Application, Request, Response } from "express";
+
 import { onwardsRoute } from "./routes";
 
 import { PORT } from "./config";
 
-const app = express();
+const app: Application = express();
 
 // Express configuration
 app.set("port", PORT);
 app.use(express.json({ limit: "50mb" }));
+app.disable("x-powered-by");
 
-app.get("/healthcheck", (req, res) => res.send({ status: "okay" }));
+app.get("/healthcheck", (req: Request, res: Response) =>
+  res.send({ status: "okay" })
+);
 
 app.get("/onwards/*", onwardsRoute);
 
